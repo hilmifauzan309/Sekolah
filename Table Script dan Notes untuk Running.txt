@@ -18,26 +18,6 @@ Notes untuk running kafka :
 11. step terakhir run module microservice user dan masterdata
 
 
-create jwt : 
-
-curl --request POST \
-  --url http://localhost:8080/api/user/login/create/jwt \
-  --header 'Content-Type: application/json' \
-  --data '{
-  "username": "fahmi",
-  "password": "fahmi123"
-}'
-
-
-
-create candidate : 
-
-curl --request GET \
-  --url http://localhost:8081/api/masterdata/candidate/find/by-username \
-  --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJmYWhtaSIsImlhdCI6MTcxNDc4NTEyOCwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTQyOH0.7m72_luh2kMNOxGiq4-kOx9Nnuq66Y7vgDHmHAjs-NQ' \
-  --header 'username: fahmi' \
-
-
 
 create user login (username except admin, harus langsung insert db)
 
@@ -45,9 +25,39 @@ curl --request POST \
   --url http://localhost:8080/api/user/login/save \
   --header 'Content-Type: application/json' \
   --data '{
-  "username": "fahmi",
-  "password": "fahmi123"
+  "username": "hilmi",
+  "password": "hilmi123"
 }'
+
+
+
+create jwt : 
+
+curl --request POST \
+  --url http://localhost:8080/api/user/login/create/jwt \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "username": "hilmi",
+  "password": "hilmi123"
+}'
+
+
+
+create candidate : 
+
+curl --request POST \
+  --url http://localhost:8080/api/user/masterdata/save \
+  --header 'Content-Type: application/json' \
+  --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJmYWhtaSIsImlhdCI6MTcxNDc4NTEyOCwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTQyOH0.7m72_luh2kMNOxGiq4-kOx9Nnuq66Y7vgDHmHAjs-NQ' \
+  --header 'username: hilmi' \
+  --data '{
+	"nama": "hilmi",
+	"tempatLahir": "jakarta",
+	"tanggalLahir": "1999",
+	"alamat": "pamulang",
+	"nomorKartuKeluarga": "B123"
+}'
+
 
 
 
@@ -65,7 +75,7 @@ find by username (get dari header saat login) :
 curl --request GET \
   --url http://localhost:8081/api/masterdata/candidate/find/by-username \
   --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJmYWhtaSIsImlhdCI6MTcxNDc4NTEyOCwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTQyOH0.7m72_luh2kMNOxGiq4-kOx9Nnuq66Y7vgDHmHAjs-NQ' \
-  --header 'username: fahmi' \
+  --header 'username: hilmi' \
 
 
 
