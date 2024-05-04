@@ -1,0 +1,75 @@
+Table Script dan Notes untuk Running
+
+file kafka : https://drive.google.com/file/d/1x7PVk_nuTe7Y_FWfNSMO42Whr8pi3Gzt/view?usp=sharing
+
+file terlalu besar tidak bisa masuk github 
+
+Notes untuk running kafka : 
+1. extract rar kafka 
+2. lalu buka cmd
+3. buka WSL, dengan mengetikan WSL pada cmd dan tekan enter
+4. ketik ip addr dan ambil ip eth0 yang sebelah kiri(bukan yang belakangnya .255)
+5. selanjutnya rubah advertised.listeners didalam folder kafka/config/server.properties menjadi ip yg ada di step 4
+6. kemudian kembali ke WSL 
+7.lalu masuk ke directory kafka. contoh : cd kafka
+8. lalu run zookeper : bin/zookeeper-server-start.sh config/zookeeper.properties
+9. ulangi step 3-4 di tab cmd yang baru
+10. lalu run kafka : bin/kafka-server-start.sh config/server.properties
+11. step terakhir run module microservice user dan masterdata
+
+
+create jwt : 
+
+curl --request POST \
+  --url http://localhost:8080/api/user/login/create/jwt \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "username": "fahmi",
+  "password": "fahmi123"
+}'
+
+
+
+create candidate : 
+
+curl --request GET \
+  --url http://localhost:8081/api/masterdata/candidate/find/by-username \
+  --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJmYWhtaSIsImlhdCI6MTcxNDc4NTEyOCwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTQyOH0.7m72_luh2kMNOxGiq4-kOx9Nnuq66Y7vgDHmHAjs-NQ' \
+  --header 'username: fahmi' \
+
+
+
+create user login (username except admin, harus langsung insert db)
+
+curl --request POST \
+  --url http://localhost:8080/api/user/login/save \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "username": "fahmi",
+  "password": "fahmi123"
+}'
+
+
+
+delete data (hanya boleh admin) :
+
+curl --request DELETE \
+  --url http://localhost:8080/api/user/masterdata/delete/2 \
+  --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJhZG1pbiIsImlhdCI6MTcxNDc4NDc5Niwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTA5Nn0.IHYimky3q8ZMNtia1oNteFpx__yoXSgdj8OKtTlRnxc' \
+  --header 'username: admin' \
+
+
+
+find by username (get dari header saat login) : 
+
+curl --request GET \
+  --url http://localhost:8081/api/masterdata/candidate/find/by-username \
+  --header 'token: eyJ0eXBlIjoiSldUIiwiYWxnIjoiSFMyNTYifQ.eyJqdGkiOiJmYWhtaSIsImlhdCI6MTcxNDc4NTEyOCwic3ViIjoiaGlsbWkiLCJpc3MiOiJISUxNSSIsImV4cCI6MTcxNDc4NTQyOH0.7m72_luh2kMNOxGiq4-kOx9Nnuq66Y7vgDHmHAjs-NQ' \
+  --header 'username: fahmi' \
+
+
+
+hit lewat postman menggunakan url, header dan body seperti diatas untuk testing.
+terimakasih, Best regards
+Hilmi 
+
